@@ -9,7 +9,7 @@ class TopBodyHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 60),
+      padding: const EdgeInsets.only(top: 40),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -25,7 +25,7 @@ class TopBodyHome extends StatelessWidget {
             height: 50,
           ),
           const SizedBox(
-            width: 250,
+            width: 150,
             child: ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(15)),
                 child: Image(image: AssetImage('assets/icons/logo_name.png'))),

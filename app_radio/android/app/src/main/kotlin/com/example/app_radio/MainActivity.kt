@@ -1,4 +1,4 @@
-package com.bogota.recobro.radio
+package com.example.app_radio
 
 import io.flutter.embedding.android.FlutterActivity
 
