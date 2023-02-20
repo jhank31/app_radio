@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'radio_app',
-      initialRoute: 'homePage',
+      initialRoute: 'drawer',
       getPages: routes,
       theme: ThemeData(
           fontFamily: 'Open Sans', canvasColor: ColorsConst.splashWhite),

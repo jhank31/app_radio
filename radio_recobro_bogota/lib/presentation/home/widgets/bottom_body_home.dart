@@ -32,10 +32,12 @@ class _BottomBodyHomeState extends State<BottomBodyHome> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20),
+      padding: const EdgeInsets.symmetric(vertical: 30),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: [Controls(audioPlayer: audioPlayer)],
+        children: [
+          Controls(audioPlayer: audioPlayer),
+        ],
       ),
     );
   }
@@ -55,18 +57,40 @@ class Controls extends StatelessWidget {
         final processingState = playerState?.processingState;
         final playing = playerState?.playing;
         if (!(playing ?? false)) {
-          return IconButton(
-            onPressed: audioPlayer.play,
-            icon: const Icon(Icons.play_arrow_rounded),
-            iconSize: 100,
-            color: ColorsConst.beish,
+          return Column(
+            children: [
+              IconButton(
+                onPressed: audioPlayer.play,
+                icon: const Icon(Icons.play_arrow_rounded),
+                iconSize: 100,
+                color: ColorsConst.beish,
+              ),
+              Text(
+                "Reproducir",
+                style: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                    color: ColorsConst.beish),
+              )
+            ],
           );
         } else if (processingState != ProcessingState.completed) {
-          return IconButton(
-            onPressed: audioPlayer.pause,
-            icon: const Icon(Icons.pause_rounded),
-            iconSize: 100,
-            color: ColorsConst.beish,
+          return Column(
+            children: [
+              IconButton(
+                onPressed: audioPlayer.pause,
+                icon: const Icon(Icons.pause_rounded),
+                iconSize: 100,
+                color: ColorsConst.beish,
+              ),
+              Text(
+                'Pausar',
+                style: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                    color: ColorsConst.beish),
+              )
+            ],
           );
         }
 
