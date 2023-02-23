@@ -9,7 +9,7 @@
         </intent>
     </queries>
    <application
-        android:label="radio_recobro_bogota"
+        android:label="Radio Recobro Bogota"
         android:usesCleartextTraffic="true"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
