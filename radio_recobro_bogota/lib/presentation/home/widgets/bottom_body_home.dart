@@ -1,8 +1,12 @@
-// ignore_for_file: unrelated_type_equality_checks
+// ignore_for_file: unrelated_type_equality_checks, depend_on_referenced_packages, unused_import
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:radio_recobro_bogota/presentation/const/color_const.dart';
+import 'package:animate_do/animate_do.dart';
+import 'package:radio_recobro_bogota/presentation/home/controller/controller_home.dart';
+import 'package:radio_recobro_bogota/presentation/horarios_transmicion/controller/controller_horarios.dart';
 
 class BottomBodyHome extends StatefulWidget {
   const BottomBodyHome({
@@ -14,6 +18,8 @@ class BottomBodyHome extends StatefulWidget {
 }
 
 class _BottomBodyHomeState extends State<BottomBodyHome> {
+  final controller = Get.put(ControllerHome());
+  
   late AudioPlayer audioPlayer;
   final String url = "http://stream.zeno.fm/8zxrngxe0k8uv";
 
@@ -37,6 +43,45 @@ class _BottomBodyHomeState extends State<BottomBodyHome> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Controls(audioPlayer: audioPlayer),
+          const SizedBox(
+            height: 20,
+          ),
+          BounceInUp(
+            delay: const Duration(milliseconds: 300),
+            from: 25,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconButton(
+                  iconSize: 48,
+                  onPressed: () async {
+                    controller.launchUrl(controller.urlFacebook);
+                  },
+                  icon: const Image(
+                      height: 50,
+                      image: AssetImage('assets/icons/facebook_icon.png')),
+                ),
+                IconButton(
+                  iconSize: 50,
+                  onPressed: () async {
+                    controller.launchUrl(controller.urlInstagram);
+                  },
+                  icon: const Image(
+                      height: 50,
+                      image: AssetImage('assets/icons/instagram_icon.png')),
+                ),
+                IconButton(
+                  iconSize: 43,
+                  onPressed: () async {
+                    controller.launchUrl(controller.urlGoogle);
+                  },
+                  icon: const Image(
+                      height: 45,
+                      image: AssetImage('assets/icons/google_icon.png')),
+                ),
+              ],
+            ),
+          )
         ],
       ),
     );
@@ -59,36 +104,48 @@ class Controls extends StatelessWidget {
         if (!(playing ?? false)) {
           return Column(
             children: [
-              IconButton(
-                onPressed: audioPlayer.play,
-                icon: const Icon(Icons.play_arrow_rounded),
-                iconSize: 100,
-                color: ColorsConst.beish,
+              SlideInLeft(
+                from: 10,
+                child: IconButton(
+                  onPressed: audioPlayer.play,
+                  icon: const Icon(Icons.play_arrow_rounded),
+                  iconSize: 100,
+                  color: ColorsConst.beish,
+                ),
               ),
-              Text(
-                "Reproducir",
-                style: TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold,
-                    color: ColorsConst.beish),
+              FadeInDown(
+                from: 10,
+                child: Text(
+                  "Reproducir",
+                  style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                      color: ColorsConst.beish),
+                ),
               )
             ],
           );
         } else if (processingState != ProcessingState.completed) {
           return Column(
             children: [
-              IconButton(
-                onPressed: audioPlayer.pause,
-                icon: const Icon(Icons.pause_rounded),
-                iconSize: 100,
-                color: ColorsConst.beish,
+              SlideInRight(
+                from: 10,
+                child: IconButton(
+                  onPressed: audioPlayer.pause,
+                  icon: const Icon(Icons.pause_rounded),
+                  iconSize: 100,
+                  color: ColorsConst.beish,
+                ),
               ),
-              Text(
-                'Pausar',
-                style: TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold,
-                    color: ColorsConst.beish),
+              FadeInUp(
+                from: 10,
+                child: Text(
+                  'Pausar',
+                  style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                      color: ColorsConst.beish),
+                ),
               )
             ],
           );

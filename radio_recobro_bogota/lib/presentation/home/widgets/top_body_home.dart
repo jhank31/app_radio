@@ -1,11 +1,77 @@
+// ignore_for_file: depend_on_referenced_packages, unrelated_type_equality_checks
+
+import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:radio_recobro_bogota/presentation/const/color_const.dart';
+import 'package:animate_do/animate_do.dart';
 
-class TopBodyHome extends StatelessWidget {
+import '../../horarios_transmicion/controller/controller_horarios.dart';
+
+class TopBodyHome extends StatefulWidget {
   const TopBodyHome({
     Key? key,
   }) : super(key: key);
+
+  @override
+  State<TopBodyHome> createState() => _TopBodyHomeState();
+}
+
+class _TopBodyHomeState extends State<TopBodyHome> {
+  final controllerHora = Get.put(ControllerHorarios());
+  final storage = GetStorage();
+  String texto = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _actualizarTexto();
+    getTexto();
+  }
+
+  getTexto() {
+    setState(() {
+      texto = storage.read('valorHoras');
+    });
+  }
+
+  _actualizarTexto() {
+    final ahora = DateTime.now();
+    final horaActual =
+        DateTime(0, 0, 0, ahora.hour, ahora.minute, ahora.second);
+    final diaActual = ahora.weekday;
+
+    Map mapa;
+    if (diaActual >= DateTime.monday && diaActual <= DateTime.saturday) {
+      mapa = controllerHora.mapaLunesSabado;
+    } else {
+      mapa = controllerHora.mapaDomingo;
+    }
+
+    for (var hora in mapa.keys) {
+      if (horaActual == hora) {
+        setState(() {
+          texto = mapa[hora]!;
+          storage.remove('valorHoras');
+          storage.write('valorHoras', texto);
+        });
+        break;
+      }
+    }
+    final proximaHora = mapa.keys.firstWhere(
+      (hora) => hora.isAfter(horaActual),
+      orElse: () => DateTime(0, 0, 0, 23, 59, 59),
+    );
+    final tiempoRestante = proximaHora.difference(horaActual);
+    final duracionRestante = Duration(
+        hours: tiempoRestante.inHours,
+        minutes: tiempoRestante.inMinutes % 60,
+        seconds: tiempoRestante.inSeconds % 60);
+
+    Timer(duracionRestante, _actualizarTexto);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,22 +80,42 @@ class TopBodyHome extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(
-            'Radio Recobro Bogotá',
-            style: TextStyle(
-                color: ColorsConst.principalBackground,
-                fontSize: 25,
-                fontWeight: FontWeight.bold),
-            overflow: TextOverflow.visible,
+          FadeIn(
+            delay: const Duration(milliseconds: 200),
+            child: Text(
+              'Radio Recobro Bogotá',
+              style: TextStyle(
+                  color: ColorsConst.principalBackground,
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold),
+              overflow: TextOverflow.visible,
+            ),
           ),
           const SizedBox(
             height: 50,
           ),
+          FadeIn(
+            delay: const Duration(milliseconds: 200),
+            child: const SizedBox(
+              width: 150,
+              child: ClipRRect(
+                  borderRadius: BorderRadius.all(Radius.circular(15)),
+                  child:
+                      Image(image: AssetImage('assets/icons/logo_mayus.jpg'))),
+            ),
+          ),
           const SizedBox(
-            width: 150,
-            child: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(15)),
-                child: Image(image: AssetImage('assets/icons/logo_name.png'))),
+            height: 15,
+          ),
+          FadeInDown(
+            from: 20,
+            child: Text(
+              texto,
+              style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: ColorsConst.principalBackground),
+            ),
           ),
           const SizedBox(
             height: 20,

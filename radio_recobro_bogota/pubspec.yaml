@@ -33,7 +33,10 @@ dependencies:
     sdk: flutter
   flutter_zoom_drawer: ^3.0.3
   get: ^4.6.5
+  get_storage: ^2.0.3
+  intl: ^0.18.0
   just_audio: ^0.9.31
+  url_launcher: ^6.1.9
 
 dev_dependencies:
   animate_do: ^3.0.2
