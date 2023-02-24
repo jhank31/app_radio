@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:get/get.dart';
 import 'package:radio_recobro_bogota/presentation/horarios_transmicion/controller/controller_horarios.dart';
 import 'package:animate_do/animate_do.dart';
@@ -18,6 +17,7 @@ class HorariosPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: ColorsConst.principalBackground,
       appBar: AppBar(
+        elevation: 0,
         actions: [
           IconButton(
               iconSize: 35,
@@ -26,13 +26,6 @@ class HorariosPage extends StatelessWidget {
               icon: const Icon(Icons.exit_to_app_rounded))
         ],
         backgroundColor: ColorsConst.beish,
-        leading: IconButton(
-            onPressed: () => ZoomDrawer.of(context)!.toggle(),
-            icon: Icon(
-              Icons.menu_open_rounded,
-              color: ColorsConst.principalGreen,
-              size: 40,
-            )),
       ),
       body: ListView.builder(
         physics: const BouncingScrollPhysics(),

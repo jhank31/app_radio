@@ -2,39 +2,17 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:just_audio/just_audio.dart';
 import 'package:radio_recobro_bogota/presentation/const/color_const.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:radio_recobro_bogota/presentation/home/controller/controller_home.dart';
 import 'package:radio_recobro_bogota/presentation/horarios_transmicion/controller/controller_horarios.dart';
 
-class BottomBodyHome extends StatefulWidget {
-  const BottomBodyHome({
+class BottomBodyHome extends StatelessWidget {
+  BottomBodyHome({
     Key? key,
   }) : super(key: key);
 
-  @override
-  State<BottomBodyHome> createState() => _BottomBodyHomeState();
-}
-
-class _BottomBodyHomeState extends State<BottomBodyHome> {
-  final controller = Get.put(ControllerHome());
-
-  late AudioPlayer audioPlayer;
-  final String url = "http://stream.zeno.fm/8zxrngxe0k8uv";
-
-  @override
-  void initState() {
-    super.initState();
-    audioPlayer = AudioPlayer()..setUrl(url);
-  }
-
-  @override
-  void dispose() {
-    audioPlayer.dispose();
-    super.dispose();
-  }
-
+  final controller = Get.find<ControllerHome>();
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -42,9 +20,57 @@ class _BottomBodyHomeState extends State<BottomBodyHome> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Controls(audioPlayer: audioPlayer),
+          Obx(() => AnimatedSwitcher(
+                transitionBuilder: (widget, animation) => ScaleTransition(
+                  scale: animation,
+                  child: widget,
+                ),
+                duration: const Duration(milliseconds: 500),
+                child: controller.statePLaying == false
+                    ? Column(
+                        key: const ValueKey("play"),
+                        children: [
+                          IconButton(
+                              color: ColorsConst.beish,
+                              iconSize: 100,
+                              onPressed: () async {
+                                controller.statePLaying.value =
+                                    !controller.statePLaying.value;
+                                controller.texto.value = "Pausar";
+                                await controller.initRadio();
+                              },
+                              icon: const Icon(Icons.play_arrow_rounded)),
+                        ],
+                      )
+                    : Column(
+                        key: const ValueKey("pause"),
+                        children: [
+                          IconButton(
+                              color: ColorsConst.beish,
+                              iconSize: 100,
+                              onPressed: () async {
+                                await controller.pauseRadio();
+                                controller.statePLaying.value =
+                                    !controller.statePLaying.value;
+                                controller.texto.value = "Reproducir";
+                              },
+                              icon: const Icon(Icons.pause)),
+                        ],
+                      ),
+              )),
+          Obx(
+            () => FadeIn(
+              child: Text(
+                controller.texto.value,
+                style: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                    color: ColorsConst.beish),
+              ),
+            ),
+          ),
           SizedBox(
-            height: Get.height * 0.08,
+            height: Get.height * 0.06,
           ),
           BounceInUp(
             delay: const Duration(milliseconds: 300),
@@ -93,79 +119,6 @@ class _BottomBodyHomeState extends State<BottomBodyHome> {
           )
         ],
       ),
-    );
-  }
-}
-
-class Controls extends StatelessWidget {
-  const Controls({super.key, required this.audioPlayer});
-
-  final AudioPlayer audioPlayer;
-
-  @override
-  Widget build(BuildContext context) {
-    return StreamBuilder<PlayerState>(
-      stream: audioPlayer.playerStateStream,
-      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-        final playerState = snapshot.data;
-        final processingState = playerState?.processingState;
-        final playing = playerState?.playing;
-        if (!(playing ?? false)) {
-          return Column(
-            children: [
-              SlideInLeft(
-                from: 10,
-                child: IconButton(
-                  onPressed: audioPlayer.play,
-                  icon: const Icon(Icons.play_arrow_rounded),
-                  iconSize: 100,
-                  color: ColorsConst.beish,
-                ),
-              ),
-              FadeInDown(
-                from: 10,
-                child: Text(
-                  "Reproducir",
-                  style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                      color: ColorsConst.beish),
-                ),
-              )
-            ],
-          );
-        } else if (processingState != ProcessingState.completed) {
-          return Column(
-            children: [
-              SlideInRight(
-                from: 10,
-                child: IconButton(
-                  onPressed: audioPlayer.pause,
-                  icon: const Icon(Icons.pause_rounded),
-                  iconSize: 100,
-                  color: ColorsConst.beish,
-                ),
-              ),
-              FadeInUp(
-                from: 10,
-                child: Text(
-                  'Pausar',
-                  style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                      color: ColorsConst.beish),
-                ),
-              )
-            ],
-          );
-        }
-
-        return Icon(
-          Icons.play_arrow_rounded,
-          size: 100,
-          color: ColorsConst.beish,
-        );
-      },
     );
   }
 }

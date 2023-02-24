@@ -64,7 +64,6 @@ class _TopBodyHomeState extends State<TopBodyHome> {
         seconds: tiempoRestante.inSeconds % 60);
 
     Timer(duracionRestante, _actualizarTexto);
-    print(tiempoRestante);
   }
 
   @override
@@ -76,23 +75,9 @@ class _TopBodyHomeState extends State<TopBodyHome> {
         children: [
           FadeIn(
             delay: const Duration(milliseconds: 200),
-            child: Text(
-              'Radio Recobro Bogotá',
-              style: TextStyle(
-                  color: ColorsConst.principalBackground,
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold),
-              overflow: TextOverflow.visible,
-            ),
-          ),
-          const SizedBox(
-            height: 50,
-          ),
-          FadeIn(
-            delay: const Duration(milliseconds: 200),
-            child: const SizedBox(
-              width: 150,
-              child: ClipRRect(
+            child: SizedBox(
+              width: Get.width * 0.55,
+              child: const ClipRRect(
                   borderRadius: BorderRadius.all(Radius.circular(15)),
                   child:
                       Image(image: AssetImage('assets/icons/logo_mayus.jpg'))),

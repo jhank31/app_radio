@@ -1,6 +1,6 @@
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:get/get.dart';
 import 'package:radio_recobro_bogota/presentation/const/color_const.dart';
 import 'package:radio_recobro_bogota/presentation/home/widgets/bottom_body_home.dart';
@@ -12,27 +12,25 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
+        elevation: 0,
         actions: [
           IconButton(
               iconSize: 35,
-              color: ColorsConst.principalGreen,
+              color: ColorsConst.principalBackground,
               onPressed: () => SystemNavigator.pop(),
               icon: const Icon(Icons.exit_to_app_rounded))
         ],
-        backgroundColor: ColorsConst.beish,
-        leading: IconButton(
-            onPressed: () => ZoomDrawer.of(context)!.toggle(),
-            icon: Icon(
-              Icons.menu_open_rounded,
-              color: ColorsConst.principalGreen,
-              size: 40,
-            )),
+        backgroundColor: Colors.transparent,
       ),
       body: SafeArea(
+        bottom: false,
+        top: false,
         child: Stack(
           children: [
             Container(
+              padding: EdgeInsets.only(top: Get.height * 0.07),
               decoration: BoxDecoration(
                   gradient: LinearGradient(
                 begin: Alignment.topLeft,
@@ -54,8 +52,8 @@ class HomePage extends StatelessWidget {
                           topLeft: Radius.circular(50),
                           topRight: Radius.circular(50))),
                   width: Get.width,
-                  height: Get.height * 0.4,
-                  child: const BottomBodyHome()),
+                  height: Get.height * 0.45,
+                  child: BottomBodyHome()),
             )
           ],
         ),
