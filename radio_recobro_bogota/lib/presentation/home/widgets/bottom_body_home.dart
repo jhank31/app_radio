@@ -19,7 +19,7 @@ class BottomBodyHome extends StatefulWidget {
 
 class _BottomBodyHomeState extends State<BottomBodyHome> {
   final controller = Get.put(ControllerHome());
-  
+
   late AudioPlayer audioPlayer;
   final String url = "http://stream.zeno.fm/8zxrngxe0k8uv";
 
@@ -43,8 +43,8 @@ class _BottomBodyHomeState extends State<BottomBodyHome> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Controls(audioPlayer: audioPlayer),
-          const SizedBox(
-            height: 20,
+          SizedBox(
+            height: Get.height * 0.08,
           ),
           BounceInUp(
             delay: const Duration(milliseconds: 300),
@@ -78,6 +78,15 @@ class _BottomBodyHomeState extends State<BottomBodyHome> {
                   icon: const Image(
                       height: 45,
                       image: AssetImage('assets/icons/google_icon.png')),
+                ),
+                IconButton(
+                  iconSize: 50,
+                  onPressed: () async {
+                    controller.launchUrl(controller.urlYoutube);
+                  },
+                  icon: const Image(
+                      height: 50,
+                      image: AssetImage('assets/icons/youtube_icon.png')),
                 ),
               ],
             ),

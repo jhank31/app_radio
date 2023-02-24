@@ -28,13 +28,7 @@ class _TopBodyHomeState extends State<TopBodyHome> {
   void initState() {
     super.initState();
     _actualizarTexto();
-    getTexto();
-  }
-
-  getTexto() {
-    setState(() {
-      texto = storage.read('valorHoras');
-    });
+    texto = storage.read('valorHoras') ?? "";
   }
 
   _actualizarTexto() {
@@ -54,7 +48,6 @@ class _TopBodyHomeState extends State<TopBodyHome> {
       if (horaActual == hora) {
         setState(() {
           texto = mapa[hora]!;
-          storage.remove('valorHoras');
           storage.write('valorHoras', texto);
         });
         break;
@@ -71,6 +64,7 @@ class _TopBodyHomeState extends State<TopBodyHome> {
         seconds: tiempoRestante.inSeconds % 60);
 
     Timer(duracionRestante, _actualizarTexto);
+    print(tiempoRestante);
   }
 
   @override
@@ -105,16 +99,17 @@ class _TopBodyHomeState extends State<TopBodyHome> {
             ),
           ),
           const SizedBox(
-            height: 15,
+            height: 20,
           ),
           FadeInDown(
             from: 20,
             child: Text(
-              texto,
+              'Cronograma: \n $texto',
               style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                   color: ColorsConst.principalBackground),
+              textAlign: TextAlign.center,
             ),
           ),
           const SizedBox(

@@ -1,6 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:get/get.dart';
 import 'package:radio_recobro_bogota/presentation/horarios_transmicion/controller/controller_horarios.dart';
@@ -17,6 +18,13 @@ class HorariosPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: ColorsConst.principalBackground,
       appBar: AppBar(
+        actions: [
+          IconButton(
+              iconSize: 35,
+              color: ColorsConst.principalGreen,
+              onPressed: () => SystemNavigator.pop(),
+              icon: const Icon(Icons.exit_to_app_rounded))
+        ],
         backgroundColor: ColorsConst.beish,
         leading: IconButton(
             onPressed: () => ZoomDrawer.of(context)!.toggle(),
