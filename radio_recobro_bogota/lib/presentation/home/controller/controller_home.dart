@@ -1,7 +1,7 @@
 // ignore_for_file: deprecated_member_use, unrelated_type_equality_checks, prefer_typing_uninitialized_variables
 
-import 'package:audioplayers/audioplayers.dart';
 import 'package:get/get.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ControllerHome extends GetxController {
@@ -17,6 +17,7 @@ class ControllerHome extends GetxController {
   final urlGoogle = "https://www.ilcbogotadc.org/radio-recobro-bogota";
   final urlYoutube = 'https://youtube.com/@iglesiaenlalocalidaddelaci7212';
   final String urlEmisora = "http://stream.zeno.fm/8zxrngxe0k8uv";
+  
 
   Future launchUrl(String url) async {
     try {
@@ -34,7 +35,7 @@ class ControllerHome extends GetxController {
 
   Future initRadio() async {
     try {
-      await audio.play(urlSource);
+      await audio.play();
     } catch (e) {
       rethrow;
     }
@@ -49,7 +50,7 @@ class ControllerHome extends GetxController {
   }
 
   bool isPlaying() {
-    if (audioState == PlayerState.playing) {
+    if (audioState == audio.playing) {
       return true;
     } else {
       return false;
@@ -57,11 +58,11 @@ class ControllerHome extends GetxController {
   }
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
     texto.value = "Reproducir";
     statePLaying.value = isPlaying();
-    urlSource = UrlSource(urlEmisora);
+    await audio.setUrl(urlEmisora);
   }
 
   @override
