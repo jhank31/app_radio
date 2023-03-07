@@ -2,9 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:radio_recobro_bogota/presentation/const/color_const.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:radio_recobro_bogota/presentation/home/controller/controller_home.dart';
+import 'package:radio_recobro_bogota/presentation/home/widgets/controls.dart';
 import 'package:radio_recobro_bogota/presentation/horarios_transmicion/controller/controller_horarios.dart';
 
 class BottomBodyHome extends StatelessWidget {
@@ -22,54 +25,9 @@ class BottomBodyHome extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Obx(() => AnimatedSwitcher(
-                  transitionBuilder: (widget, animation) => ScaleTransition(
-                    scale: animation,
-                    child: widget,
-                  ),
-                  duration: const Duration(milliseconds: 500),
-                  child: controller.statePLaying == false
-                      ? Column(
-                          key: const ValueKey("play"),
-                          children: [
-                            IconButton(
-                                color: ColorsConst.beish,
-                                iconSize: 100,
-                                onPressed: () async {
-                                  controller.statePLaying.value =
-                                      !controller.statePLaying.value;
-                                  controller.texto.value = "Pausar";
-                                  await controller.initRadio();
-                                },
-                                icon: const Icon(Icons.play_arrow_rounded)),
-                          ],
-                        )
-                      : Column(
-                          key: const ValueKey("pause"),
-                          children: [
-                            IconButton(
-                                color: ColorsConst.beish,
-                                iconSize: 100,
-                                onPressed: () async {
-                                  await controller.pauseRadio();
-                                  controller.statePLaying.value =
-                                      !controller.statePLaying.value;
-                                  controller.texto.value = "Reproducir";
-                                },
-                                icon: const Icon(Icons.pause)),
-                          ],
-                        ),
-                )),
-            Obx(
-              () => FadeIn(
-                child: Text(
-                  controller.texto.value,
-                  style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                      color: ColorsConst.beish),
-                ),
-              ),
+            Controls(
+              audioPlayer: controller.audio,
+              controllerHome: controller,
             ),
             SizedBox(
               height: Get.height * 0.055,
@@ -128,3 +86,4 @@ class BottomBodyHome extends StatelessWidget {
     );
   }
 }
+

@@ -1,6 +1,6 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:radio_recobro_bogota/presentation/const/color_const.dart';
 import 'package:radio_recobro_bogota/presentation/home/widgets/bottom_body_home.dart';
@@ -19,7 +19,7 @@ class HomePage extends StatelessWidget {
           IconButton(
               iconSize: 35,
               color: ColorsConst.principalBackground,
-              onPressed: () => SystemNavigator.pop(),
+              onPressed: () => exit(0),
               icon: const Icon(Icons.exit_to_app_rounded))
         ],
         backgroundColor: Colors.transparent,

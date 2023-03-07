@@ -1,7 +1,8 @@
 // ignore_for_file: depend_on_referenced_packages
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:radio_recobro_bogota/presentation/horarios_transmicion/controller/controller_horarios.dart';
 import 'package:animate_do/animate_do.dart';
@@ -22,7 +23,7 @@ class HorariosPage extends StatelessWidget {
           IconButton(
               iconSize: 35,
               color: ColorsConst.principalGreen,
-              onPressed: () => SystemNavigator.pop(),
+              onPressed: () => exit(0),
               icon: const Icon(Icons.exit_to_app_rounded))
         ],
         backgroundColor: ColorsConst.beish,
