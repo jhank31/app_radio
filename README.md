@@ -1,6 +1,6 @@
 # app_radio
 
-POLÍTICAS Y SEGURIDAD DE LA APLICACIÓN DE STREAMING DE AUDIO EN VIVO DE LA IGLESIA 
+POLÍTICAS Y PRIVACIDAD DE LA APLICACIÓN DE STREAMING DE AUDIO EN VIVO DE LA APP RADIO RECOBRO BOGOTA
 
   
 
@@ -21,6 +21,7 @@ Contenido apropiado para todas las edades:
 Protección de datos y privacidad: 
 
 2.1. No tomamos datos personales del usuario que se encuentre usando la app, por lo tanto, no compartiremos ni venderemos tu información personal a terceros sin tu consentimiento expreso, a menos que sea requerido por ley.  
+2.4 No contamos con un sistemas para guardar los datos de los usuarios, por lo tanto no tenemos acceso a dichos datos personales
 
 Interacción segura y respetuosa: 
 
